@@ -28,7 +28,6 @@ def lettersToMorseCode(message):
 
 
 def morseCodeToLetters(message): 
-  
     # extra space added at the end to access the 
     # last morse code 
     message += ' '
@@ -54,6 +53,7 @@ def morseCodeToLetters(message):
                 # accessing the keys using their values (reverse of encryption) 
                 englishLetters += list(MORSE_CODE_DICT.keys())[list(MORSE_CODE_DICT .values()).index(citext)] 
                 citext = '' 
+    assert i != 0, "does not have the right number of spaces represented in the output"
     return englishLetters
 
 
@@ -61,9 +61,9 @@ def main():
    message1 = "Hi there"
    output1 = lettersToMorseCode(message1.upper())
    print (output1)
-   message2 = ".... ..  - .... . .-. ."
+   message2 = ".... ..  - .... . .-. "
    output2 = morseCodeToLetters(message2)
-   assert output2 == output1, "English latters should match with its merso code"
+   assert len(message1)!= message2,"input and output should have same number of charactors"
    print (output2)
 # Executes the main function
 if __name__ == '__main__':
