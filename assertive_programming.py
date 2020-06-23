@@ -1,6 +1,5 @@
-  
-# This Dictionary shows the morse code chat
-MORSE_CODE_DICT = { 'A':'.-', 'B':'-...', 
+#suppose the following dictionary shows morse code for each charectors difined below
+CODE = { 'A':'.-', 'B':'-...', 
                     'C':'-.-.', 'D':'-..', 'E':'.', 
                     'F':'..-.', 'G':'--.', 'H':'....', 
                     'I':'..', 'J':'.---', 'K':'-.-', 
@@ -15,56 +14,33 @@ MORSE_CODE_DICT = { 'A':'.-', 'B':'-...',
                     '0':'-----', ', ':'--..--', '.':'.-.-.-', 
                     '?':'..--..', '/':'-..-.', '-':'-....-', 
                     '(':'-.--.', ')':'-.--.-'}
-# fuction for converting letters to morse code  
-def lettersToMorseCode(message):
-    morse_code = ''
-    message =message.upper()
-    for letter in message: 
-        if letter != ' ':  
-            morse_code += MORSE_CODE_DICT[letter] + ' '
-        else: 
-            morse_code+= ' '         
-    return morse_code
+
+def text_to_morsecode(message): # function that converts text to morse code
+    message =message.upper()       # incase we have small charecters, we convert them into Capital lettrs
+    encoded_message= " "       # declaring empty string
+    for character in message:    # looping for each charector in given text to covert into morse code
+        if character != " ":
+            encoded_message += CODE[character] + " "
+        else:
+            encoded_message = " " 
+    return encoded_message
 
 
-def morseCodeToLetters(message): 
-    # extra space added at the end to access the 
-    # last morse code 
-    message += ' '
-    englishLetters = '' 
-    citext = '' 
-    for letter in message: 
-        # checks for space 
-        if (letter != ' '): 
-            # counter to keep track of space 
-            i = 0
-            # storing morse code of a single character 
-            citext += letter 
-        # in case of space 
-        else: 
-            # if i = 1 that indicates a new character 
-            i += 1
-            # if i = 2 that indicates a new word 
-            if i == 2 : 
-                 # adding space to separate words 
-                englishLetters += ' '
-            else: 
-  
-                # accessing the keys using their values (reverse of encryption) 
-                englishLetters += list(MORSE_CODE_DICT.keys())[list(MORSE_CODE_DICT .values()).index(citext)] 
-                citext = '' 
-    assert i != 0, "does not have the right number of spaces represented in the output"
-    return englishLetters
+inv_code = {v:k for k,v in CODE.items()}
+testCode = ".... . .-.. .-.. --- / -.. .- .. .-.. -.-- / .--. .-. --- --. .-. .- -- -- . .-. / --. --- --- -.. / .-.. ..- -.-. -.- / --- -. / - .... . / -.-. .... .- .-.. .-.. . -. --. . ... / - --- -.. .- -.--"
+
+def morsecode_to_text(message):
+    messageSeparated = message.split(' ')
+    decode_message = ''
+    for character in messageSeparated:
+        if character in inv_code:
+            decode_message += inv_code[character]
+        else:
+            decode_message += ' '
+    return decode_message
+
+print(text_to_morsecode("Hi There"))
+print(morsecode_to_text(".... .. / - .... . .-. ."))
 
 
-def main():
-   message1 = "Hi there"
-   output1 = lettersToMorseCode(message1.upper())
-   print (output1)
-   message2 = ".... ..  - .... . .-. "
-   output2 = morseCodeToLetters(message2)
-   assert len(message1)!= message2,"input and output should have same number of charactors"
-   print (output2)
-# Executes the main function
-if __name__ == '__main__':
-   main()
+
